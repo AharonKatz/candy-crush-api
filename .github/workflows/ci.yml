@@ -7,6 +7,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -23,7 +26,7 @@ jobs:
 
       - name: Run tests
         run: |
-          PYTHONPATH=. pytest
+          pytest
 
       - name: Deploy to Render
         if: success()
