@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Candy Crush API Demo</title>
@@ -65,8 +65,8 @@
   <h1>🍬 Candy Crush API Demo</h1>
 
   <p>
-    דמו חי של משחק Candy Crush מבוסס API.<br>
-    לחיצה על הכפתור שולחת לוח ל־שרת FastAPI, מבצעת חישוב פיצוצים ומחזירה את הלוח לאחר "crush".
+    This is a live demo of a Candy Crush-style logic system built with a REST API.<br>
+    Clicking the button below sends a board to a FastAPI backend, calculates chain reactions, and returns the updated board.
   </p>
 
   <button onclick="runDemo()">🔁 Crush Board</button>
@@ -74,9 +74,9 @@
   <div id="board"></div>
 
   <footer>
-    נבנה על ידי הילה הרמן •
-    <a href="https://github.com/AharonKatz/candy-crush-api" target="_blank">קוד פתוח</a> •
-    GitHub Pages
+    Built by Aharon Katz •
+    <a href="https://github.com/AharonKatz/candy-crush-api" target="_blank">Source on GitHub</a> •
+    Deployed via GitHub Pages
   </footer>
 
   <script>
@@ -99,7 +99,7 @@
         document.getElementById("combo").textContent = `🎉 Combo Count: ${data.combo}`;
         renderBoard(data.board);
       } catch (err) {
-        document.getElementById("combo").textContent = "❌ API לא זמין כרגע.";
+        document.getElementById("combo").textContent = "❌ API is currently unavailable.";
       }
     }
 
