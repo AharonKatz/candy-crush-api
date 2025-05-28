@@ -15,6 +15,17 @@
       color: #0099a8;
     }
 
+    textarea {
+      width: 100%;
+      height: 120px;
+      margin-top: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
     button {
       background-color: #00c4cc;
       color: white;
@@ -66,9 +77,10 @@
 
   <p>
     This is a live demo of a Candy Crush-style logic system built with a REST API.<br>
-    Clicking the button below sends a board to a FastAPI backend, calculates chain reactions, and returns the updated board.
+    You can use the default board or paste your own matrix below.
   </p>
 
+  <textarea id="customBoard" placeholder="Paste your board here as a 2D array..."></textarea>
   <button onclick="runDemo()">🔁 Crush Board</button>
   <p id="combo"></p>
   <div id="board"></div>
@@ -81,12 +93,20 @@
 
   <script>
     async function runDemo() {
-      const board = [
-        [5, 2, 3, 4],
-        [5, 1, 1, 1],
-        [5, 1, 2, 1],
-        [5, 1, 1, 1]
-      ];
+      let board;
+      const input = document.getElementById("customBoard").value.trim();
+
+      try {
+        board = input ? JSON.parse(input) : [
+          [5, 2, 3, 4],
+          [5, 1, 1, 1],
+          [5, 1, 2, 1],
+          [5, 1, 1, 1]
+        ];
+      } catch (e) {
+        document.getElementById("combo").textContent = "❌ Invalid board format.";
+        return;
+      }
 
       try {
         const response = await fetch("https://candy-crush-api.onrender.com/api/crush", {
