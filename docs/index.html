@@ -35,10 +35,20 @@
       font-size: 16px;
       cursor: pointer;
       margin-top: 10px;
+      margin-right: 10px;
     }
 
     button:hover {
       background-color: #0099a8;
+    }
+
+    .secondary {
+      background-color: #ccc;
+      color: black;
+    }
+
+    .secondary:hover {
+      background-color: #bbb;
     }
 
     table {
@@ -81,7 +91,10 @@
   </p>
 
   <textarea id="customBoard" placeholder="Paste your board here as a 2D array..."></textarea>
+  <br>
   <button onclick="runDemo()">🔁 Crush Board</button>
+  <button onclick="resetBoard()" class="secondary">🔄 Reset</button>
+
   <p id="combo"></p>
   <div id="board"></div>
 
@@ -92,17 +105,19 @@
   </footer>
 
   <script>
+    const defaultBoard = [
+      [5, 2, 3, 4],
+      [5, 1, 1, 1],
+      [5, 1, 2, 1],
+      [5, 1, 1, 1]
+    ];
+
     async function runDemo() {
       let board;
       const input = document.getElementById("customBoard").value.trim();
 
       try {
-        board = input ? JSON.parse(input) : [
-          [5, 2, 3, 4],
-          [5, 1, 1, 1],
-          [5, 1, 2, 1],
-          [5, 1, 1, 1]
-        ];
+        board = input ? JSON.parse(input) : defaultBoard;
       } catch (e) {
         document.getElementById("combo").textContent = "❌ Invalid board format.";
         return;
@@ -121,6 +136,12 @@
       } catch (err) {
         document.getElementById("combo").textContent = "❌ API is currently unavailable.";
       }
+    }
+
+    function resetBoard() {
+      document.getElementById("customBoard").value = "";
+      document.getElementById("combo").textContent = "";
+      renderBoard(defaultBoard);
     }
 
     function renderBoard(board) {
@@ -142,6 +163,9 @@
 
       container.appendChild(table);
     }
+
+    // Initial board render
+    renderBoard(defaultBoard);
   </script>
 </body>
 </html>
