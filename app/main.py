@@ -1,23 +1,30 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 from .crush import crush
-from fastapi.middleware.cors import CORSMiddleware
-
 
 app = FastAPI()
+
+# Enable CORS for all origins (for frontend access)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # אפשר לשים ['http://localhost:63343'] אם את רוצה להגביל
+    allow_origins=["*"],  # Replace with specific origin if needed
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Root endpoint for Render health check
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
 
+# Input schema
 class BoardInput(BaseModel):
     board: List[List[int]]
 
+# Main crush endpoint
 @app.post("/api/crush")
 def crush_board(data: BoardInput):
     if not data.board or not data.board[0]:
